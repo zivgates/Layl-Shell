@@ -14,7 +14,7 @@ BOOL readFile(fileInfo* info){
                               FILE_ATTRIBUTE_NORMAL, 
                               NULL);
     if(hFile == INVALID_HANDLE_VALUE){
-        wprintf(L"Failed Opening File, Error Code %llu\n", GetLastError());
+        wprintf(L"Failed Opening File, Error Code %d\n", GetLastError());
         return FALSE;
     }
     BOOL readFileStatus = ReadFile(hFile, 
@@ -23,7 +23,7 @@ BOOL readFile(fileInfo* info){
                                   NULL, 
                                   NULL);
     if(readFileStatus != TRUE){
-        wprintf(L"Failed Reading File, Error Code %llu\n", GetLastError());
+        wprintf(L"Failed Reading File, Error Code %d\n", GetLastError());
         CloseHandle(hFile);
         return FALSE;
     }
