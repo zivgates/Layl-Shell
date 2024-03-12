@@ -19,7 +19,7 @@ static BOOL createMemoryDump(char* filename){
 }
 
 VOID startRecovery(struct _EXCEPTION_POINTERS* info){
-    wprintf(L"Layl Shell Has Crashed\nWriting Dump File Into C:\\LaylShellDump.dmp\n");
+    wprintf(L"Layl Shell Has Crashed\nWriting Dump File Into C:\\ProgramData\\LaylShellDump.dmp\n");
     if(!createMemoryDump("C:\\ProgramData\\LaylShellDump.dmp")) wprintf(L"Cannot Create Dump");
     wprintf(L"Crash Info: \n");
     wprintf(L"Exception Code is 0x%1lx\n", info->ExceptionRecord->ExceptionCode);

@@ -7,10 +7,13 @@
 
 int wmain(int argc, WCHAR* argv[]){
     if(argc < 2){
-        wprintf(L"  -------------------------------------------\n");
-        wprintf(L"  | Layl Shell Version %0.1f                  |\n", VER);
-        wprintf(L"  | Copyright \"zvqle\", All Rights Reserved  |\n", VER);
-        wprintf(L"  -------------------------------------------\n\n\n");
+        WCHAR begin[BUFSIZE]; 
+        swprintf(begin, BUFSIZE, 
+                       L"-------------------------------------------\n"
+                               "| Layl Shell Version %.1f                  |\n"
+                               "| Copyright \"zvqle\", All Rights Reserved  |\n"
+                               "-------------------------------------------\n\n\n", VER);
+        wprintf(L"%s\n", begin);
         cliInfo info;
         startCli(&info);
         return 1;
