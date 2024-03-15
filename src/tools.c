@@ -21,3 +21,18 @@ WCHAR* charToWchar(const char* str){
     return wstr;
 
 }
+
+WCHAR* toLowerCase(WCHAR* string){
+    for(int i = 0; string[i]; i++){
+        string[i] = towlower(string[i]);
+    }
+    return string;
+}
+
+void debugPrint(data *data, const wchar_t *format, ...) {
+    if(data->isDebug != TRUE) return;
+    va_list args;
+    va_start(args, format);
+    vwprintf(format, args);
+    va_end(args);
+}

@@ -12,7 +12,7 @@ int wmain(int argc, WCHAR* argv[]){
                        L"-------------------------------------------\n"
                                "| Layl Shell Version %.1f                  |\n"
                                "| Copyright \"zvqle\", All Rights Reserved  |\n"
-                               "-------------------------------------------\n\n\n", VER);
+                               "-------------------------------------------\n\n", VER);
         wprintf(L"%s\n", begin);
         cliInfo info;
         startCli(&info);

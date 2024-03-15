@@ -31,6 +31,7 @@ BOOL readFile(fileInfo* info){
     info->fileContentBuffer = charToWchar(buffer);
     WCHAR* holder;
     WCHAR* token = wcstok(info->fileContentBuffer, L"\n", &holder);
+    
     while(token != NULL){
         data currentdata;
         lineParser(token, &currentdata);
