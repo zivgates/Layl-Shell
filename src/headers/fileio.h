@@ -6,6 +6,8 @@
 BOOL createFile(data* data);
 BOOL deleteFile(data* data);
 BOOL copyFile(data* data);
+BOOL writeFile(data* data);
+BOOL readFile(data* data);
 
 
 #endif

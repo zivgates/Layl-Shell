@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-BOOL readFile(fileInfo* info);
+BOOL startReader(fileInfo* info);
 
 #endif

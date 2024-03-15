@@ -21,7 +21,7 @@ int wmain(int argc, WCHAR* argv[]){
     else{
         fileInfo info;
         info.fileName = argv[1];
-        readFile(&info);
+        startReader(&info);
     }
     return 0;
 }

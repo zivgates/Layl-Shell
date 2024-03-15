@@ -4,7 +4,7 @@
 
 
 
-BOOL readFile(fileInfo* info){
+BOOL startReader(fileInfo* info){
     char buffer[BUFSIZE];
     HANDLE hFile = CreateFileW(info->fileName, 
                               GENERIC_READ, 

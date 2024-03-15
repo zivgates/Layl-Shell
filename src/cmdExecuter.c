@@ -26,7 +26,14 @@ VOID cmdExecuter(data* data){
         case 5:
             copyFile(data);
             break;
-        
-
+        case 6:
+            readFile(data);
+            break;
+        case 7:
+            writeFile(data);
+            break;
+        default:
+            wprintf(L"%s is the incorrect command!\n", data->cmd);
+            break;
     }
 }
