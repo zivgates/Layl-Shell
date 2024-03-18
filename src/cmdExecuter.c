@@ -32,6 +32,12 @@ VOID cmdExecuter(data* data){
         case 7:
             writeFile(data);
             break;
+        case 8:
+            writeFileNoReset(data);
+            break;
+        case 9:
+            help();
+            break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
             break;

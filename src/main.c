@@ -4,7 +4,6 @@
 
 
 
-
 int wmain(int argc, WCHAR* argv[]){
     if(argc < 2){
         WCHAR begin[BUFSIZE]; 

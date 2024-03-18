@@ -22,6 +22,15 @@ WCHAR* charToWchar(const char* str){
 
 }
 
+char* wcharToChar(const wchar_t* str) {
+    int size = WideCharToMultiByte(CP_UTF8, 0, str, -1, NULL, 0, NULL, NULL);
+    char* buffer = (char*)malloc(size);
+    if (buffer != NULL) {
+        WideCharToMultiByte(CP_UTF8, 0, str, -1, buffer, size, NULL, NULL);
+    }
+    return buffer;
+}
+
 WCHAR* toLowerCase(WCHAR* string){
     for(int i = 0; string[i]; i++){
         string[i] = towlower(string[i]);

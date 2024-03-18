@@ -8,5 +8,6 @@ WCHAR* charToWchar(const char* str);
 VOID lineParser(WCHAR buffer[], data* data);
 WCHAR* toLowerCase(WCHAR* string);
 VOID debugPrint(data* data, const WCHAR* format, ...);
+char* wcharToChar(const wchar_t* str);
 
 #endif

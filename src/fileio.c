@@ -1,9 +1,6 @@
 #include "headers/fileio.h"
 #include "headers/tools.h"
-#include <fileapi.h>
-
-
-
+#include <stdio.h>
 
 
 BOOL createFile(data* data){
@@ -78,7 +75,7 @@ BOOL writeFile(data* data){
         return FALSE;
     }
     debugPrint(data, L"First File is %s, Content is %s\n", firstFile, content);
-
+    char* normalContent = wcharToChar(content);
     HANDLE hFile = CreateFileW(firstFile, 
                              GENERIC_WRITE, 
                              0, 
@@ -92,8 +89,8 @@ BOOL writeFile(data* data){
         return FALSE;
     }
     BOOL result = WriteFile(hFile, 
-             content, 
-             wcslen(content), 
+             normalContent, 
+             strlen(normalContent), 
              NULL, 
              NULL);
     if(result == FALSE){
@@ -101,7 +98,33 @@ BOOL writeFile(data* data){
         CloseHandle(hFile);
         return FALSE;
     }
+    free(normalContent);
     CloseHandle(hFile);
+    return TRUE;
+}
+
+BOOL writeFileNoReset(data* data){
+    if(!data->arg){
+        wprintf(L"Usage: fwrite [filename] [content]\n");
+        return FALSE;
+    }
+    WCHAR* firstFile;
+    WCHAR* content;
+    WCHAR* holder;
+    firstFile = wcstok(data->arg, L" ", &holder);
+    content = wcstok(NULL, L"\n", &holder);
+    if(!content){
+        wprintf(L"Usage: fwrite [filename] [content]\n");
+        return FALSE;
+    }
+    FILE* file = _wfopen(firstFile, L"a");
+    if(file == NULL){
+        wprintf(L"Failed Opening File\n");
+        return FALSE;
+    }
+    fwprintf(file, content);
+    fwprintf(file, L"\n");
+    fclose(file);
     return TRUE;
 }
 
@@ -133,6 +156,7 @@ BOOL readFile(data* data){
         wprintf(L"Failed Reading File, Error Code %d\n", GetLastError());
         return FALSE;
     }
+    wprintf(L"%hs\n", buffer);
     CloseHandle(hFile);
     return TRUE;
 }

@@ -6,5 +6,6 @@
 #include "main.h"
 
 VOID crash();
+VOID help();
 
 #endif
