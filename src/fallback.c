@@ -24,8 +24,8 @@ VOID startRecovery(struct _EXCEPTION_POINTERS* info){
     wprintf(L"Crash Info: \n");
     wprintf(L"Exception Code is 0x%1lx\n", info->ExceptionRecord->ExceptionCode);
     wprintf(L"Exception Address in 0x%1llx\n", (unsigned long long)info->ExceptionRecord->ExceptionAddress);
-    wprintf(L"\n\nWill Return To Shell in 10 Seconds\n");
-    Sleep(10000);
+    wprintf(L"Press Any Key To Return To The Shell\n");
+    _getwch();
     ExitThread(-1);
     return;
 }

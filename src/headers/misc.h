@@ -7,5 +7,6 @@
 
 VOID crash();
 VOID help();
+VOID pause();
 
 #endif

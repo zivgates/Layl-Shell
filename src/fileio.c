@@ -8,7 +8,16 @@ BOOL createFile(data* data){
         wprintf(L"Usage: fcreate [filename]\n");
         return FALSE;
     }
-    HANDLE hFile = CreateFileW(data->arg, 
+    WCHAR fileNameBuffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
+    }
+    else{
+        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
+    }
+    debugPrint(data, L"File is %s\n", fileNameBuffer);
+
+    HANDLE hFile = CreateFileW(fileNameBuffer, 
                               GENERIC_READ | GENERIC_WRITE, 
                               0,
                               NULL,
@@ -29,7 +38,15 @@ BOOL deleteFile(data* data){
         wprintf(L"Usage: fdelete [filename]\n");
         return FALSE;
     }
-    BOOL result = DeleteFileW(data->arg);
+    WCHAR fileNameBuffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
+    }
+    else{
+        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
+    }
+    BOOL result = DeleteFileW(fileNameBuffer);
+    debugPrint(data, L"File is %s\n", fileNameBuffer);
     if(result == FALSE){
         wprintf(L"Failed Deleting File, Error Code %d\n", GetLastError());\
         return FALSE;
@@ -51,10 +68,25 @@ BOOL copyFile(data* data){
         wprintf(L"Usage: fcopy [filename1] [filename2]\n");
         return FALSE;
     }
-    debugPrint(data, L"First File is %s, Second is %s\n", firstFile, secondFile);
-    BOOL result = CopyFileW(firstFile, secondFile, FALSE);
+    WCHAR fileName1Buffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileName1Buffer, BUFSIZE, L"%s", firstFile);
+    }
+    else{
+        swprintf(fileName1Buffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
+    }
+    WCHAR fileName2Buffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileName2Buffer, BUFSIZE, L"%s", secondFile);
+    }
+    else{
+        swprintf(fileName2Buffer, BUFSIZE, L"%s\\%s", data->path,  secondFile);
+    }
+
+    debugPrint(data, L"First File is %s, Second is %s\n", fileName1Buffer, fileName2Buffer);
+    BOOL result = CopyFileW(fileName1Buffer, fileName2Buffer, FALSE);
     if(result == FALSE){
-        wprintf(L"Failed Copying File, Error Code %d\n", GetLastError());\
+        wprintf(L"Failed Copying File, Error Code %d\n", GetLastError());
         return FALSE;
     }
     return TRUE;
@@ -62,7 +94,7 @@ BOOL copyFile(data* data){
 
 BOOL writeFile(data* data){
     if(!data->arg){
-        wprintf(L"Usage: fwrite [filename] [content]\n");
+        wprintf(L"Usage: fprint [filename] [content]\n");
         return FALSE;
     }
     WCHAR* firstFile;
@@ -70,13 +102,20 @@ BOOL writeFile(data* data){
     WCHAR* holder;
     firstFile = wcstok(data->arg, L" ", &holder);
     content = wcstok(NULL, L"\n", &holder);
+    WCHAR fileNameBuffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileNameBuffer, BUFSIZE, L"%s", firstFile);
+    }
+    else{
+        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
+    }
     if(!content){
         wprintf(L"Usage: fwrite [filename] [content]\n");
         return FALSE;
     }
-    debugPrint(data, L"First File is %s, Content is %s\n", firstFile, content);
+    debugPrint(data, L"First File is %s, Content is %s\n", fileNameBuffer, content);
     char* normalContent = wcharToChar(content);
-    HANDLE hFile = CreateFileW(firstFile, 
+    HANDLE hFile = CreateFileW(fileNameBuffer, 
                              GENERIC_WRITE, 
                              0, 
                              NULL,
@@ -113,11 +152,19 @@ BOOL writeFileNoReset(data* data){
     WCHAR* holder;
     firstFile = wcstok(data->arg, L" ", &holder);
     content = wcstok(NULL, L"\n", &holder);
+    WCHAR fileNameBuffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileNameBuffer, BUFSIZE, L"%s", firstFile);
+    }
+    else{
+        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
+    }
     if(!content){
         wprintf(L"Usage: fwrite [filename] [content]\n");
         return FALSE;
     }
-    FILE* file = _wfopen(firstFile, L"a");
+    debugPrint(data, L"File is %s\n", fileNameBuffer);
+    FILE* file = _wfopen(fileNameBuffer, L"a");
     if(file == NULL){
         wprintf(L"Failed Opening File\n");
         return FALSE;
@@ -134,7 +181,15 @@ BOOL readFile(data* data){
         return FALSE;
     }
     WCHAR buffer[BUFSIZE];
-    HANDLE hFile = CreateFileW(data->arg, 
+    WCHAR fileNameBuffer[BUFSIZE];
+    if(data->path == NULL){
+        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
+    }
+    else{
+        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
+    }
+    debugPrint(data, L"File is %s\n", fileNameBuffer);
+    HANDLE hFile = CreateFileW(fileNameBuffer, 
                               GENERIC_READ | GENERIC_WRITE, 
                               0,
                               NULL,

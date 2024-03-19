@@ -5,7 +5,8 @@
 
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
-                 L"fread", L"fwrite", L"fprint", L"help"};
+                 L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
+                 L"pause", L"dcreate", L"ddelete"};
 
 
 
@@ -14,8 +15,21 @@ static LONG WINAPI failureHandler(struct _EXCEPTION_POINTERS* exceptionInfo){
     return 0;
 }
 
+static VOID ctrlhandler(DWORD dwControlType){
+    switch(dwControlType){
+        case CTRL_C_EVENT:
+            wprintf(L"Exiting...\n");
+            Sleep(2000);
+            ExitProcess(2);
+            break;
+        default:
+            break;
+    }
+}
+
 static DWORD WINAPI cmdRunning(LPVOID param){
     SetUnhandledExceptionFilter(failureHandler);
+    SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrlhandler, TRUE);    
     data* dta = (data*)param;
     debugPrint(dta, L"Started A New Thread\n");
     cmdExecuter(dta);
@@ -26,6 +40,7 @@ static DWORD WINAPI cmdRunning(LPVOID param){
 
 
 VOID cmdChecker(data* data){
+RETURN:
     if(!data->cmd) return;
     data->cmd = toLowerCase(data->cmd);
     int cmdsize = sizeof(cmds)/sizeof(cmds[0]);

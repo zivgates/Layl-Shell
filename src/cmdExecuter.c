@@ -2,6 +2,7 @@
 #include "headers/misc.h"
 #include "headers/lylapi.h"
 #include "headers/fileio.h"
+#include "headers/dirio.h"
 
 
 
@@ -37,6 +38,25 @@ VOID cmdExecuter(data* data){
             break;
         case 9:
             help();
+            break;
+        case 10:
+            moveDirectory(data);
+            break;
+        case 11:
+            if(!data->arg){
+                wprintf(L"usage: wait [ms], pauses the shell for specifc ms\n");
+                return;
+            }
+            Sleep(wcstol(data->arg, NULL, 0));
+            break;
+        case 12:
+            pause();
+            break;
+        case 13:
+            createDirectory(data);
+            break;
+        case 14:
+            deleteDirectory(data);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);

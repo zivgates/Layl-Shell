@@ -11,7 +11,8 @@
 
 typedef struct _fileInfo{
     WCHAR* fileName;
-    WCHAR* fileContentBuffer;
+    WCHAR fileContentBuffer[BUFSIZE];
+    WCHAR* nonNewLineChar;
 } fileInfo;
 
 typedef struct _cliInfo{

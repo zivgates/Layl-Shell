@@ -15,3 +15,9 @@ VOID crash(){
     WCHAR* idk;
     wcscpy(idk, L"lol");
 }
+
+
+VOID pause(){
+    wprintf(L"Press Any Key To Continue To Layl\n");
+    _getwch();
+}

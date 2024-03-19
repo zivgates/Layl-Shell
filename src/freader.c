@@ -5,38 +5,21 @@
 
 
 BOOL startReader(fileInfo* info){
-    char buffer[BUFSIZE];
-    HANDLE hFile = CreateFileW(info->fileName, 
-                              GENERIC_READ, 
-                              0, 
-                              NULL, 
-                              OPEN_EXISTING, 
-                              FILE_ATTRIBUTE_NORMAL, 
-                              NULL);
-    if(hFile == INVALID_HANDLE_VALUE){
-        wprintf(L"Failed Opening File, Error Code %d\n", GetLastError());
+    data data;
+    data.path = NULL;
+    WCHAR* context;
+    FILE* file = _wfopen(info->fileName, L"r");
+    if(file == NULL){
+        _wperror(L"Failed Opening File\n");
         return FALSE;
     }
-    BOOL readFileStatus = ReadFile(hFile, 
-                                  buffer, 
-                                  BUFSIZE, 
-                                  NULL, 
-                                  NULL);
-    if(readFileStatus != TRUE){
-        wprintf(L"Failed Reading File, Error Code %d\n", GetLastError());
-        CloseHandle(hFile);
-        return FALSE;
+    while(fgetws(info->fileContentBuffer, BUFSIZE, file)){
+        info->nonNewLineChar = wcstok(info->fileContentBuffer, L"\n", &context);
+        //if(info->nonNewLineChar == NULL) goto PASS;
+        lineParser(info->nonNewLineChar, &data);
+        cmdChecker(&data);
     }
-    CloseHandle(hFile);
-    info->fileContentBuffer = charToWchar(buffer);
-    WCHAR* holder;
-    WCHAR* token = wcstok(info->fileContentBuffer, L"\n", &holder);
     
-    while(token != NULL){
-        data currentdata;
-        lineParser(token, &currentdata);
-        cmdChecker(&currentdata);
-        token = wcstok(NULL, L"\n", &holder);
-    }
+
     return TRUE;
 }

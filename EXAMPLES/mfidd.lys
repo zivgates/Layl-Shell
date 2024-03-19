@@ -1,0 +1,17 @@
+echo moving
+wait 2000
+moveto c:\programdata
+wait 2000
+
+echo w
+wait 2000
+
+fcreate thisis
+wait 2000
+
+fwrite thisis fuckyou
+wait 2000
+
+fcopy thisis notis
+wait 2000
+
