@@ -8,5 +8,7 @@
 VOID moveDirectory(data* data);
 VOID createDirectory(data* data);
 VOID deleteDirectory(data* data);
+VOID printDirectory(data* data);
+VOID printCurrentDirectory();
 
 #endif

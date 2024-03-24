@@ -58,6 +58,12 @@ VOID cmdExecuter(data* data){
         case 14:
             deleteDirectory(data);
             break;
+        case 15:
+            printDirectory(data);
+            break;
+        case 16:
+            printCurrentDirectory();
+            break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
             break;

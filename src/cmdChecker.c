@@ -6,7 +6,7 @@
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
-                 L"pause", L"dcreate", L"ddelete"};
+                 L"pause", L"dcreate", L"ddelete", L"pd", L"cd"};
 
 
 

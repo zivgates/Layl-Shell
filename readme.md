@@ -1,6 +1,10 @@
 # Layl Shell
 Welcome To The Layl Shell, A Shell And Script Interperter For Microsoft Windows
 
+# THIS README IS CURRENTLY OUTDATED
+
+check misc.c -> help() to see all the current commands
+
 
 # How To Use
 

@@ -31,6 +31,7 @@ char* wcharToChar(const wchar_t* str) {
     return buffer;
 }
 
+
 WCHAR* toLowerCase(WCHAR* string){
     for(int i = 0; string[i]; i++){
         string[i] = towlower(string[i]);

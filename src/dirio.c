@@ -1,6 +1,28 @@
 #include "headers/dirio.h"
+#include "headers/tinydir.h"
+#include "headers/tools.h"
 
+#include <tchar.h>
 
+static CHAR* getDirectoryA(){
+    CHAR* path;
+    path = (CHAR*)malloc(BUFSIZE);
+    GetCurrentDirectoryA(BUFSIZE, path);
+    return path;
+}
+
+static WCHAR* getDirectory(){
+    WCHAR* path;
+    path = (WCHAR*)malloc(BUFSIZE);
+    GetCurrentDirectoryW(BUFSIZE, path);
+    return path;
+}
+
+VOID printCurrentDirectory(){
+    WCHAR* path = getDirectory();
+    wprintf(L"Current Directory is %s\n", path);
+    free(path);
+}
 
 
 VOID moveDirectory(data* data){
@@ -22,7 +44,7 @@ VOID moveDirectory(data* data){
     }
     GetCurrentDirectoryW(BUFSIZE, data->path);
 PRINT:
-    wprintf(L"Current Directory is %s\n", data->path);
+    wprintf(L"Moved To %s\n", data->path);
 }
 
 VOID createDirectory(data* data){
@@ -44,7 +66,37 @@ VOID deleteDirectory(data* data){
     }
     BOOL result = RemoveDirectoryW(data->arg);
     if(!result){
-        wprintf(L"Failed Deleting Direcotry, Error Code %d\n", GetLastError());
+        wprintf(L"Failed Removing Direcotry, Error Code %d\n", GetLastError());
     }
     return;
+}
+
+VOID printDirectory(data* data) {
+    tinydir_dir dir;
+    int i = 0;
+    unsigned long directorySize = 0;
+    char* path;
+    BOOL isAllocated = FALSE;
+    if(data->arg) path = wcharToChar(data->arg);
+    else {
+        path = getDirectoryA();
+        isAllocated = TRUE;
+    }
+    const TCHAR* tcharPath = _T(path);
+    tinydir_open(&dir, tcharPath);
+    _tprintf("\n");
+    while(dir.has_next){
+        i++;
+        tinydir_file file;
+        tinydir_readfile(&dir, &file);
+        if(file.is_dir) _tprintf("[%s] ", file.name);
+        else _tprintf("%s ", file.name);
+        if(i % 7 == 0) _tprintf("\n\n");
+        tinydir_next(&dir);
+    }
+    _tprintf("\n");
+    tinydir_close(&dir);
+    if(isAllocated == TRUE){
+        free(path);
+    }
 }
