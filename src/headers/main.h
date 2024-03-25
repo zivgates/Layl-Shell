@@ -6,7 +6,7 @@
 #include <DbgHelp.h>
 
 #define BUFSIZE 4096
-#define VER 0.0
+#define VER 0.1
 
 
 typedef struct _fileInfo{

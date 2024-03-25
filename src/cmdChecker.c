@@ -2,11 +2,13 @@
 #include "headers/cmdExecuter.h"
 #include "headers/fallback.h"
 #include "headers/tools.h"
+#include "headers/startProcess.h"
+
 
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
-                 L"pause", L"dcreate", L"ddelete", L"pd", L"cd"};
+                 L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start"};
 
 
 
@@ -40,6 +42,10 @@ static DWORD WINAPI cmdRunning(LPVOID param){
 
 
 VOID cmdChecker(data* data){
+    if(data->cmd[0] == L',' && data->cmd[0] == L','){
+        quickStartProcess(data);
+        return;
+    } 
 RETURN:
     if(!data->cmd) return;
     data->cmd = toLowerCase(data->cmd);
