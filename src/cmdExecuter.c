@@ -5,6 +5,7 @@
 #include "headers/dirio.h"
 #include "headers/startProcess.h"
 #include "headers/processConfig.h"
+#include "headers/power.h"
 
 
 
@@ -73,6 +74,9 @@ VOID cmdExecuter(data* data){
             break;
         case 18:
             processConfigurer(data);
+            break;
+        case 19:
+            powerManagement(data);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);

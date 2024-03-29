@@ -9,7 +9,7 @@
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
                  L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start",
-                 L"process"};
+                 L"process", L"power"};
 
 
 
@@ -45,6 +45,10 @@ static DWORD WINAPI cmdRunning(LPVOID param){
 VOID cmdChecker(data* data){
     if(data->cmd[0] == L',' && data->cmd[0] == L','){
         quickStartProcess(data);
+        return;
+    } 
+    else if(data->cmd[0] == L'>' && data->cmd[0] == L'>'){
+        quickStartProcessinNewWindow(data);
         return;
     } 
 RETURN:

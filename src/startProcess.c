@@ -26,6 +26,10 @@ static inline VOID createProcessWithAdminPerms(WCHAR* process, WCHAR* arguments)
     ShellExecuteW(NULL, L"runas", process, arguments, NULL, SW_SHOW);
 }
 
+static inline VOID createProcessInNewWindow(WCHAR* process, WCHAR* arguments){
+    ShellExecuteW(NULL, L"open", process, arguments, NULL, SW_SHOW);
+}
+
 VOID startProcess(data* data){
     WCHAR* token;
     if(!data->arg){
@@ -54,5 +58,16 @@ VOID quickStartProcess(data* data){
         return;
     }
     createProcess(cmd, data->arg);
+
+}
+
+
+VOID quickStartProcessinNewWindow(data* data){
+    WCHAR* token;
+    WCHAR* cmd = wcstok(data->cmd, L">>", &token);
+    if(!cmd){
+        return;
+    }
+    createProcessInNewWindow(cmd, data->arg);
 
 }
