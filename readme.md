@@ -1,3 +1,7 @@
+![alt text](resources/icon.png "Logo")
+
+
+
 # Layl Shell
 Welcome To The Layl Shell, A Shell And Script Interperter For Microsoft Windows
 
