@@ -4,14 +4,14 @@
 
 #include <tchar.h>
 
-static CHAR* getDirectoryA(){
+static inline CHAR* getDirectoryA(){
     CHAR* path;
     path = (CHAR*)malloc(BUFSIZE);
     GetCurrentDirectoryA(BUFSIZE, path);
     return path;
 }
 
-static WCHAR* getDirectory(){
+static inline WCHAR* getDirectory(){
     WCHAR* path;
     path = (WCHAR*)malloc(BUFSIZE);
     GetCurrentDirectoryW(BUFSIZE, path);

@@ -8,16 +8,17 @@
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
-                 L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start"};
+                 L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start",
+                 L"process"};
 
 
 
-static LONG WINAPI failureHandler(struct _EXCEPTION_POINTERS* exceptionInfo){
+static inline LONG WINAPI failureHandler(struct _EXCEPTION_POINTERS* exceptionInfo){
     startRecovery(exceptionInfo);
     return 0;
 }
 
-static VOID ctrlhandler(DWORD dwControlType){
+static inline VOID ctrlhandler(DWORD dwControlType){
     switch(dwControlType){
         case CTRL_C_EVENT:
             wprintf(L"Exiting...\n");

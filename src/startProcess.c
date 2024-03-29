@@ -22,7 +22,7 @@ VOID createProcess(WCHAR* process, WCHAR* arguments){
 }
 
 
-static VOID createProcessWithAdminPerms(WCHAR* process, WCHAR* arguments){
+static inline VOID createProcessWithAdminPerms(WCHAR* process, WCHAR* arguments){
     ShellExecuteW(NULL, L"runas", process, arguments, NULL, SW_SHOW);
 }
 

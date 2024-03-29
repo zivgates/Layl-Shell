@@ -4,6 +4,8 @@
 #include "headers/fileio.h"
 #include "headers/dirio.h"
 #include "headers/startProcess.h"
+#include "headers/processConfig.h"
+
 
 
 
@@ -68,6 +70,9 @@ VOID cmdExecuter(data* data){
             break;
         case 17:
             startProcess(data);
+            break;
+        case 18:
+            processConfigurer(data);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);

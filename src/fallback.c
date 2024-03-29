@@ -2,7 +2,7 @@
 
 
 
-static BOOL createMemoryDump(char* filename){
+static inline BOOL createMemoryDump(char* filename){
     HANDLE pHandle = GetCurrentProcess();
     if(!pHandle){
         wprintf(L"Cannot Create Handle For Process\n");
