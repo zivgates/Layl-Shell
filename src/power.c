@@ -1,5 +1,6 @@
 #include "headers/power.h"
 #include <winternl.h>
+#include <powrprof.h>
 
 
 
@@ -63,7 +64,13 @@ static VOID forceShutdown(WCHAR* type, WCHAR* isValid){
             }
             break;
         case L'?':
-            wprintf(L"poweroff [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown.\nisImmediate can be 1 if true, else 0 or leave empty\n");
+            wprintf(L"power [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown.\nisImmediate can be 1 if true, else 0 or leave empty\n");
+            break;
+        case L'h':
+            SetSuspendState(TRUE, TRUE, FALSE);
+            break;
+        case L'q':
+            SetSuspendState(FALSE, FALSE, FALSE);
             break;
         default:
             wprintf(L"Incorrect Argument, Use -s to shutdown or -r to restart\n");
@@ -73,6 +80,10 @@ static VOID forceShutdown(WCHAR* type, WCHAR* isValid){
 }
 
 VOID powerManagement(data* data){
+    if(!data->arg){
+        wprintf(L"power [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown, -l to logoff, -h to hibernate, and -q to suspend the machine (if isImmediate isn't 1).\nisImmediate can be 1 if true, else 0 or empty\n");
+        return;
+    }
     WCHAR* token;
     WCHAR* type = wcstok(data->arg, L" ", &token);
     WCHAR* isImmediate = wcstok(NULL, L"\n", &token);
@@ -80,7 +91,7 @@ VOID powerManagement(data* data){
         return;
     }
     if(!type){
-        wprintf(L"poweroff [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown, -l to logoff (if isImmediate isn't 1).\nisImmediate can be 1 if true, else 0 or empty\n");
+        wprintf(L"power [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown, -l to logoff (if isImmediate isn't 1).\nisImmediate can be 1 if true, else 0 or empty\n");
     }
     if(isImmediate){
         forceShutdown(type, isImmediate);
@@ -104,7 +115,13 @@ VOID powerManagement(data* data){
             }
             break;
         case L'?':
-            wprintf(L"poweroff [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown, -l to logoff\nisImmediate can be 1 if true, else 0 or leave empty\n");
+            wprintf(L"power [type] [isImmediate?]\ntype can be -r to restart, -s to shutdown, -l to logoff (if isImmediate isn't 1).\nisImmediate can be 1 if true, else 0 or empty\n");
+            break;
+        case L'h':
+            SetSuspendState(TRUE, FALSE, FALSE);
+            break;
+        case L'q':
+            SetSuspendState(FALSE, FALSE, FALSE);
             break;
         default:
             wprintf(L"Incorrect Argument, Use -s to shutdown or -r to restart\n");

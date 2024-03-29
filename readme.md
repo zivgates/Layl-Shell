@@ -5,6 +5,8 @@
 # Layl Shell
 Welcome To The Layl Shell, A Shell And Script Interperter For Microsoft Windows
 
+To Get The Beta Version, Compile the source in the main repository
+To Get the stable version, check releases
 
 # How To Use
 
