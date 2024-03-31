@@ -6,7 +6,8 @@
 #include "headers/startProcess.h"
 #include "headers/processConfig.h"
 #include "headers/power.h"
-
+#include "headers/reg.h"
+#include "headers/driveMgmt.h"
 
 
 
@@ -77,6 +78,20 @@ VOID cmdExecuter(data* data){
             break;
         case 19:
             powerManagement(data);
+            break;
+        case 20:
+            editReg(data);
+            break;
+        case 21:
+            wprintf(L"Layl-Shell Build %0.3f\n", VER);
+            break;
+        case 22:
+            WCHAR buffer[BUFSIZE];
+            swprintf(buffer, BUFSIZE, L"Layl Shell\nBuild %0.3f\nCopyright \"zvqle\", All Rights Reserved", VER);
+            MessageBoxW(NULL, buffer, L"About Layl-Shell", MB_OK);
+            break;
+        case 23:
+            getDriveInfo(data);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);

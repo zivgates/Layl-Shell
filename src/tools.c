@@ -46,3 +46,13 @@ void debugPrint(data *data, const wchar_t *format, ...) {
     vwprintf(format, args);
     va_end(args);
 }
+
+BOOL checkAdmin() {
+    BOOL isAdmin;
+    SID_IDENTIFIER_AUTHORITY NTA = SECURITY_NT_AUTHORITY;
+    PSID AdminGroup;
+    AllocateAndInitializeSid(&NTA, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &AdminGroup);
+    CheckTokenMembership(NULL, AdminGroup, &isAdmin);
+    FreeSid(AdminGroup);
+    return isAdmin;
+}
