@@ -11,6 +11,9 @@ VOID help(){
     wprintf(L"pd {directory (optional)} - prints that directory content              | cd - prints what directory you are in\n\n");
     wprintf(L"start [perms] [process] {parameter (optional)} - starts a process with the perms you gived it with the parameter\n(for more info do start with nothing else)\n\n");
     wprintf(L"process [arg] - runs the process cmd with the args (more info type process /?)\n\n");
+    wprintf(L"power [type] [isImmediate], does specifc power settings and checks if isImmediate (if 1)\n\n");
+    wprintf(L"reg [dowhat] [hkey] [regpath] {valuename} (only for -w) {datatype} (only for -w)\nEdits Registry with Values\n\n");
+    wprintf(L"driveinfo [drive], drive is the drive name (C: or D:), gives drive info\n\n");
 }
 
 VOID crash(){
