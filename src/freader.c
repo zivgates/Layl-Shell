@@ -9,17 +9,24 @@ BOOL startReader(fileInfo* info){
     data.path = NULL;
     WCHAR* context;
     FILE* file = _wfopen(info->fileName, L"r");
+    info->fileContentBuffer = (WCHAR*)malloc(BUFSIZE + 1);
     if(file == NULL){
-        _wperror(L"Failed Opening File\n");
+        _wperror(L"Failed Opening File");
         return FALSE;
     }
     while(fgetws(info->fileContentBuffer, BUFSIZE, file)){
-        info->nonNewLineChar = wcstok(info->fileContentBuffer, L"\n", &context);
-        //if(info->nonNewLineChar == NULL) goto PASS;
-        lineParser(info->nonNewLineChar, &data);
-        cmdChecker(&data);
+        if(info->fileContentBuffer != NULL){
+            WCHAR* token = wcstok(info->fileContentBuffer, L"\n", &context);
+            while (token != NULL) {
+                info->nonNewLineChar = token;
+                if (info->nonNewLineChar != NULL) {
+                    lineParser(info->nonNewLineChar, &data);
+                    cmdChecker(&data);
+                }
+                token = wcstok(NULL, L"\n", &context);
+            }
+        }
     }
-    
-
     return TRUE;
 }
+

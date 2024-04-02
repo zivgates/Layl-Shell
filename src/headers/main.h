@@ -6,12 +6,12 @@
 #include <DbgHelp.h>
 
 #define BUFSIZE 4096
-#define VER 0.201
+#define VER 0.202
 
 
 typedef struct _fileInfo{
     WCHAR* fileName;
-    WCHAR fileContentBuffer[BUFSIZE];
+    WCHAR* fileContentBuffer;
     WCHAR* nonNewLineChar;
 } fileInfo;
 

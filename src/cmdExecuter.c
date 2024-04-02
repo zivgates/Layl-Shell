@@ -8,6 +8,7 @@
 #include "headers/power.h"
 #include "headers/reg.h"
 #include "headers/driveMgmt.h"
+#include "headers/freader.h"
 
 
 
@@ -92,6 +93,14 @@ VOID cmdExecuter(data* data){
             break;
         case 23:
             getDriveInfo(data);
+            break;
+        case 24:
+            break;
+        case 25:
+            if(!data->arg) return; 
+            fileInfo info;
+            info.fileName = data->arg;
+            startReader(&info);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
