@@ -10,5 +10,6 @@ WCHAR* toLowerCase(WCHAR* string);
 VOID debugPrint(data* data, const WCHAR* format, ...);
 char* wcharToChar(const wchar_t* str);
 BOOL checkAdmin();
+BOOL checkIfFileExist(WCHAR* fileName);
 
 #endif

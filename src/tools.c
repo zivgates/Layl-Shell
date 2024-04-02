@@ -1,4 +1,6 @@
 #include "headers/tools.h"
+#include <lzexpand.h>
+#include <winnt.h>
 
 
 
@@ -55,4 +57,16 @@ BOOL checkAdmin() {
     CheckTokenMembership(NULL, AdminGroup, &isAdmin);
     FreeSid(AdminGroup);
     return isAdmin;
+}
+
+BOOL checkIfFileExist(WCHAR* fileName){
+    OFSTRUCT OpenBuff;
+    HFILE file = LZOpenFileW(fileName, &OpenBuff, OF_EXIST);
+    if(file == HFILE_ERROR){
+        return FALSE;
+    }
+    else{
+        return TRUE;
+    }
+
 }
