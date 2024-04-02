@@ -8,5 +8,6 @@
 VOID crash();
 VOID help();
 VOID pause();
+VOID clrscr();
 
 #endif

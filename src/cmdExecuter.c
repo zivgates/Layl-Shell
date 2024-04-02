@@ -102,6 +102,15 @@ VOID cmdExecuter(data* data){
             info.fileName = data->arg;
             startReader(&info);
             break;
+        case 26:
+            if(data->path) free(data->path);
+            wprintf(L"Exiting...\n");
+            Sleep(2000);
+            ExitProcess(0);
+            break;
+        case 27:
+            clrscr();
+            break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
             break;
