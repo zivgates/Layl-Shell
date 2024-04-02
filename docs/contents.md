@@ -7,3 +7,5 @@ Finally A Seperated Docs, Good Stuff
 [Process Management](process.md)
 [Registry Management](reg.md)
 [Misc Commands](misc.md)
+[Power Commands](power.md)
+[Drive Management and Information Commands](drivemgmt.md)
