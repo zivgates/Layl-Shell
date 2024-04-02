@@ -4,7 +4,10 @@
 
 # Layl Shell
 Welcome To The Layl Shell, A Shell And Script Interperter For Microsoft Windows
+
 Copyright zvqle, All Rights Reserved
+
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
