@@ -16,4 +16,4 @@ To Get the stable version, check releases
 
 # Layl Shell/Script Interpreter Documentation
 
-[Docs Are Now Located Here](docs/contents.md.md)
+[Docs Are Now Located Here](docs/contents.md)
