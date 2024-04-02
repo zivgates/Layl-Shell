@@ -15,7 +15,7 @@ BEGIN
             VALUE "LegalCopyright",   "Copyright 2024 zvqle. All rights reserved."
             VALUE "OriginalFilename", "layl.exe"
             VALUE "ProductName",      "Layl-Shell"
-            VALUE "ProductVersion",   "0, 0, 0, 0"
+            VALUE "ProductVersion",   "0, 0, 0, 3"
             VALUE "LegalTrademarks",  "zvqle"
             VALUE "Comments",         "Shell"
         END
