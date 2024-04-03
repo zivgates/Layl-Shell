@@ -9,3 +9,10 @@ Finally A Seperated Docs, Good Stuff
 [Misc Commands](misc.md)
 [Power Commands](power.md)
 [Drive Management and Information Commands](drivemgmt.md)
+[Drive Management and Information Commands](color.md)
+
+
+
+
+
+[How to setup an Init File](init.md)

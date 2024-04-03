@@ -43,7 +43,7 @@ VOID changeBackGroundConsoleColor(data *data){
     }
 
     else {
-        wprintf(L"bcolor *color - changes background color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
+        wprintf(L"bcolor [color] - changes background color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
         return;
     }
     
@@ -54,7 +54,7 @@ VOID changeConsoleColor(data* data){
     WORD color = 0;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     if(!data->arg){
-        wprintf(L"color *color - changes color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
+        wprintf(L"color [color] - changes color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
         return;
     }
     if(wcscmp(data->arg, L"red") == 0){
@@ -78,7 +78,7 @@ VOID changeConsoleColor(data* data){
         SetConsoleTextAttribute(hConsole, color);
     }
     else{
-        wprintf(L"color *color - changes color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
+        wprintf(L"color [color] - changes color to that specifc color code\n\nCOLORS: RED, GREEN, BLUE, GRAY, WHITE, NORMAL\n");
         return;
     }
 
