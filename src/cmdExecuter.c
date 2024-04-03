@@ -9,7 +9,7 @@
 #include "headers/reg.h"
 #include "headers/driveMgmt.h"
 #include "headers/freader.h"
-
+#include "headers/color.h"
 
 
 
@@ -110,6 +110,12 @@ VOID cmdExecuter(data* data){
             break;
         case 27:
             clrscr();
+            break;
+        case 28:
+            changeBackGroundConsoleColor(data);
+            break;
+        case 29:
+            changeConsoleColor(data);
             break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
