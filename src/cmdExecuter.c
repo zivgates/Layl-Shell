@@ -10,6 +10,9 @@
 #include "headers/driveMgmt.h"
 #include "headers/freader.h"
 #include "headers/color.h"
+#include "headers/tools.h"
+#include <consoleapi2.h>
+
 
 
 
@@ -117,6 +120,21 @@ VOID cmdExecuter(data* data){
         case 29:
             changeConsoleColor(data);
             break;
+        case 30:
+            if(!data->arg){
+                wprintf(L"cmd [cmd] - runs that cmd in the shell");
+                break;
+            }
+            char* cmd = wcharToChar(data->arg);
+            system(cmd);
+            free(cmd);
+            break;
+        case 31:
+            SetConsoleTitleW(data->arg);
+            break;
+        case 32:
+            //tree(data);
+            return;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
             break;

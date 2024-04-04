@@ -16,4 +16,5 @@ VOID lylapi(data* data){
         debugPrint(data, L"[+] Exited Debug Mode\n");
         return;
     } 
+    
 }

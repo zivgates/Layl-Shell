@@ -5,6 +5,7 @@
 
 
 int wmain(int argc, WCHAR* argv[]){
+    SetConsoleTitleW(L"Layl-Shell");
     if(argc < 2){
         WCHAR begin[BUFSIZE]; 
         if(checkIfFileExist(L"C:\\ProgramData\\init.lys")){

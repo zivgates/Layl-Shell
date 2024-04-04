@@ -9,4 +9,9 @@ VOID startProcess(data* data);
 VOID quickStartProcess(data* data);
 VOID quickStartProcessinNewWindow(data* data);
 
+typedef struct _processCreation{
+    WCHAR* processName;
+    WCHAR* processArgs;
+} processCreation;
+
 #endif

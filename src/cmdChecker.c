@@ -10,7 +10,8 @@ WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"fread", L"fwrite", L"fprint", L"help", L"moveto", L"wait", 
                  L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start",
                  L"process", L"power", L"reg", L"ver", L"about", L"driveinfo",
-                 L"-", L"run", L"exit", L"cls", L"bcolor", L"color"};
+                 L"-", L"run", L"exit", L"cls", L"bcolor", L"color",
+                 L"cmd", L"changetitlebar", L"tree"};
 
 
 
@@ -41,6 +42,17 @@ static DWORD WINAPI cmdRunning(LPVOID param){
     ExitThread(0);
     return 0;
 }
+
+// static DWORD WINAPI processRunning(LPVOID param){
+//     //SetUnhandledExceptionFilter(failureHandler);
+//     //SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrlhandler, TRUE);    
+//     data* dta = (data*)param;
+//     //debugPrint(dta, L"Started A New Thread\n");
+//     //debugPrint(dta, L"Exiting  Thread\n");
+//     ExitThread(0);
+
+//     return 0;
+// }
 
 
 VOID cmdChecker(data* data){

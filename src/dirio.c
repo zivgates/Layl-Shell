@@ -2,7 +2,12 @@
 #include "headers/tinydir.h"
 #include "headers/tools.h"
 
+#include <minwinbase.h>
+#include <synchapi.h>
 #include <tchar.h>
+#include <winbase.h>
+#include <winnt.h>
+#include <stdio.h>
 
 static inline CHAR* getDirectoryA(){
     CHAR* path;

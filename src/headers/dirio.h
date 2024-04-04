@@ -10,5 +10,6 @@ VOID createDirectory(data* data);
 VOID deleteDirectory(data* data);
 VOID printDirectory(data* data);
 VOID printCurrentDirectory();
+VOID tree(data* data);
 
 #endif
