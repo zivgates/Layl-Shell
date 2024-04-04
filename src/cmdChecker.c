@@ -23,8 +23,8 @@ static inline LONG WINAPI failureHandler(struct _EXCEPTION_POINTERS* exceptionIn
 static inline VOID ctrlhandler(DWORD dwControlType){
     switch(dwControlType){
         case CTRL_C_EVENT:
-            wprintf(L"Exiting...\n");
-            Sleep(2000);
+            //wprintf(L"Exiting...\n");
+            //Sleep(2000);
             ExitProcess(2);
             break;
         default:
