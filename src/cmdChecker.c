@@ -5,7 +5,7 @@
 #include "headers/startProcess.h"
 #include <handleapi.h>
 #include <processthreadsapi.h>
-#include <signal.h>
+//#include <signal.h>
 
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
@@ -32,7 +32,7 @@ void returnToPrompt(){
 }
 static DWORD WINAPI cmdRunning(LPVOID param){
     SetUnhandledExceptionFilter(failureHandler);
-    signal(SIGINT, ctrlc);   
+    //signal(SIGINT, ctrlc);   
     data* dta = (data*)param;
     debugPrint(dta, L"Started A New Thread\n");
     cmdExecuter(dta);
