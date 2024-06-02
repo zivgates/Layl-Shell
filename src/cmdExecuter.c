@@ -12,6 +12,7 @@
 #include "headers/color.h"
 #include "headers/tools.h"
 #include <consoleapi2.h>
+#include <corecrt_wstdlib.h>
 
 
 
@@ -44,7 +45,7 @@ VOID cmdExecuter(data* data){
             writeFile(data);
             break;
         case 8:
-            writeFileNoReset(data);
+            wprintf(L"fprint has been removed, please use fwrite\n");
             break;
         case 9:
             help();
@@ -106,9 +107,7 @@ VOID cmdExecuter(data* data){
             startReader(&info);
             break;
         case 26:
-            if(data->path) free(data->path);
             wprintf(L"Exiting...\n");
-            Sleep(2000);
             ExitProcess(0);
             break;
         case 27:
@@ -133,8 +132,20 @@ VOID cmdExecuter(data* data){
             SetConsoleTitleW(data->arg);
             break;
         case 32:
-            //tree(data);
-            return;
+            if(data->state == 3){
+                if(!data->arg){
+                    wprintf(L"usage: memleak [size]\nLeaks memory in that size every 20ms");
+                    break;
+                }
+                memleak(_wcstoi64(data->arg, NULL, 0));
+            }
+            else{
+                wprintf(L"This Command is Unsafe, Run `lylapi unsafe` to allow unsafe commands\n");
+            }
+            break;
+        case 33:
+            lywrite(data);
+            break;
         default:
             wprintf(L"%s is the incorrect command!\n", data->cmd);
             break;

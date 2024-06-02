@@ -16,5 +16,9 @@ VOID lylapi(data* data){
         debugPrint(data, L"[+] Exited Debug Mode\n");
         return;
     } 
+    if(wcscmp(data->arg, L"unsafe") == 0){
+        data->state = 3;
+        return;
+    } 
     
 }

@@ -3,6 +3,7 @@
 #include "headers/tools.h"
 
 #include <minwinbase.h>
+#include <processenv.h>
 #include <synchapi.h>
 #include <tchar.h>
 #include <winbase.h>
@@ -41,15 +42,9 @@ VOID moveDirectory(data* data){
         wprintf(L"Error Changing Directory, Error Code %d\n", GetLastError());
         return;
     }
-    if(data->path == NULL){
-        data->path = (WCHAR*)malloc(BUFSIZE);
-        GetCurrentDirectoryW(BUFSIZE, data->path);
-        goto PRINT;
-        return;
-    }
-    GetCurrentDirectoryW(BUFSIZE, data->path);
-PRINT:
-    wprintf(L"Moved To %s\n", data->path);
+    WCHAR buffer[2056];
+    GetCurrentDirectoryW(2056, buffer);
+    wprintf(L"Moved To %s\n", buffer);
 }
 
 VOID createDirectory(data* data){
@@ -89,14 +84,14 @@ VOID printDirectory(data* data) {
     }
     const TCHAR* tcharPath = _T(path);
     tinydir_open(&dir, tcharPath);
-    _tprintf("\n");
+    //_tprintf("\n");
     while(dir.has_next){
         i++;
         tinydir_file file;
         tinydir_readfile(&dir, &file);
         if(file.is_dir) _tprintf("[%s] ", file.name);
         else _tprintf("%s ", file.name);
-        if(i % 7 == 0) _tprintf("\n\n");
+        if(i % 7 == 0) _tprintf("\n");
         tinydir_next(&dir);
     }
     _tprintf("\n");

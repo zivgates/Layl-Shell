@@ -1,6 +1,9 @@
 #include "headers/fileio.h"
 #include "headers/tools.h"
+#include <corecrt_wstdio.h>
+#include <corecrt_wstdlib.h>
 #include <stdio.h>
+#include <wchar.h>
 
 
 BOOL createFile(data* data){
@@ -8,16 +11,9 @@ BOOL createFile(data* data){
         wprintf(L"Usage: fcreate [filename]\n");
         return FALSE;
     }
-    WCHAR fileNameBuffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
-    }
-    else{
-        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
-    }
-    debugPrint(data, L"File is %s\n", fileNameBuffer);
+    
 
-    HANDLE hFile = CreateFileW(fileNameBuffer, 
+    HANDLE hFile = CreateFileW(data->arg, 
                               GENERIC_READ | GENERIC_WRITE, 
                               0,
                               NULL,
@@ -38,15 +34,9 @@ BOOL deleteFile(data* data){
         wprintf(L"Usage: fdelete [filename]\n");
         return FALSE;
     }
-    WCHAR fileNameBuffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
-    }
-    else{
-        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
-    }
-    BOOL result = DeleteFileW(fileNameBuffer);
-    debugPrint(data, L"File is %s\n", fileNameBuffer);
+    
+    BOOL result = DeleteFileW(data->arg);
+    debugPrint(data, L"File is %s\n", data->arg);
     if(result == FALSE){
         wprintf(L"Failed Deleting File, Error Code %d\n", GetLastError());\
         return FALSE;
@@ -68,29 +58,16 @@ BOOL copyFile(data* data){
         wprintf(L"Usage: fcopy [filename1] [filename2]\n");
         return FALSE;
     }
-    WCHAR fileName1Buffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileName1Buffer, BUFSIZE, L"%s", firstFile);
-    }
-    else{
-        swprintf(fileName1Buffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
-    }
-    WCHAR fileName2Buffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileName2Buffer, BUFSIZE, L"%s", secondFile);
-    }
-    else{
-        swprintf(fileName2Buffer, BUFSIZE, L"%s\\%s", data->path,  secondFile);
-    }
+  
 
-    debugPrint(data, L"First File is %s, Second is %s\n", fileName1Buffer, fileName2Buffer);
-    BOOL result = CopyFileW(fileName1Buffer, fileName2Buffer, FALSE);
+    BOOL result = CopyFileW(firstFile, secondFile, FALSE);
     if(result == FALSE){
         wprintf(L"Failed Copying File, Error Code %d\n", GetLastError());
         return FALSE;
     }
     return TRUE;
 }
+
 
 BOOL writeFile(data* data){
     if(!data->arg){
@@ -102,69 +79,12 @@ BOOL writeFile(data* data){
     WCHAR* holder;
     firstFile = wcstok(data->arg, L" ", &holder);
     content = wcstok(NULL, L"\n", &holder);
-    WCHAR fileNameBuffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileNameBuffer, BUFSIZE, L"%s", firstFile);
-    }
-    else{
-        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
-    }
     if(!content){
         wprintf(L"Usage: fwrite [filename] [content]\n");
         return FALSE;
     }
-    debugPrint(data, L"First File is %s, Content is %s\n", fileNameBuffer, content);
-    char* normalContent = wcharToChar(content);
-    HANDLE hFile = CreateFileW(fileNameBuffer, 
-                             GENERIC_WRITE, 
-                             0, 
-                             NULL,
-                             OPEN_ALWAYS,
-                             FILE_ATTRIBUTE_NORMAL,
-                             NULL);
-    if(hFile == INVALID_HANDLE_VALUE){
-        wprintf(L"Failed Creating File, Error Code %d\n", GetLastError());
-        CloseHandle(hFile);
-        return FALSE;
-    }
-    BOOL result = WriteFile(hFile, 
-             normalContent, 
-             strlen(normalContent), 
-             NULL, 
-             NULL);
-    if(result == FALSE){
-        wprintf(L"Failed Writing File, Error Code %d\n", GetLastError());
-        CloseHandle(hFile);
-        return FALSE;
-    }
-    free(normalContent);
-    CloseHandle(hFile);
-    return TRUE;
-}
-
-BOOL writeFileNoReset(data* data){
-    if(!data->arg){
-        wprintf(L"Usage: fwrite [filename] [content]\n");
-        return FALSE;
-    }
-    WCHAR* firstFile;
-    WCHAR* content;
-    WCHAR* holder;
-    firstFile = wcstok(data->arg, L" ", &holder);
-    content = wcstok(NULL, L"\n", &holder);
-    WCHAR fileNameBuffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileNameBuffer, BUFSIZE, L"%s", firstFile);
-    }
-    else{
-        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  firstFile);
-    }
-    if(!content){
-        wprintf(L"Usage: fwrite [filename] [content]\n");
-        return FALSE;
-    }
-    debugPrint(data, L"File is %s\n", fileNameBuffer);
-    FILE* file = _wfopen(fileNameBuffer, L"a");
+    
+    FILE* file = _wfopen(firstFile, L"a");
     if(file == NULL){
         wprintf(L"Failed Opening File\n");
         return FALSE;
@@ -181,15 +101,7 @@ BOOL readFile(data* data){
         return FALSE;
     }
     WCHAR buffer[BUFSIZE];
-    WCHAR fileNameBuffer[BUFSIZE];
-    if(data->path == NULL){
-        swprintf(fileNameBuffer, BUFSIZE, L"%s", data->arg);
-    }
-    else{
-        swprintf(fileNameBuffer, BUFSIZE, L"%s\\%s", data->path,  data->arg);
-    }
-    debugPrint(data, L"File is %s\n", fileNameBuffer);
-    HANDLE hFile = CreateFileW(fileNameBuffer, 
+    HANDLE hFile = CreateFileW(data->arg, 
                               GENERIC_READ | GENERIC_WRITE, 
                               0,
                               NULL,
@@ -214,4 +126,39 @@ BOOL readFile(data* data){
     wprintf(L"%hs\n", buffer);
     CloseHandle(hFile);
     return TRUE;
+}
+
+
+VOID lywrite(data* data){
+    if(!data->arg){
+        wprintf(L"usage: lywrite [filename]\n");
+        return;
+    }
+    FILE* file = _wfopen(data->arg, L"a");
+    if(!file){
+        _wperror(L"Couldn't Open File");
+        return;
+    }
+    WCHAR buffer[521];
+    WCHAR* context;
+    int i = 0;
+    WCHAR intro[512];
+    swprintf(intro, 512, L"Layl LyWrite Build %.3f\nCopyright zvqle, all rights reserved\n\ntype '$exit' to exit the editor", VER);
+    wprintf(L"%s\n\n", intro);
+    while(TRUE){
+        PASS:
+        i++;
+        wprintf(L"%d~ ", i);
+        fgetws(buffer, BUFSIZE, stdin);
+        WCHAR* new = wcstok(buffer, L"\n", &context);
+        if(!new){
+            goto PASS;
+        }
+        if(wcscmp(new, L"$exit") == 0){
+            break;
+        }
+        fwprintf(file, L"%s\n", new);
+    }
+    fclose(file);
+    return;
 }

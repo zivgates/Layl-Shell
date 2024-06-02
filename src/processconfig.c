@@ -8,7 +8,6 @@
 
 static inline VOID printProcess(DWORD processID, BOOL* isValid) {
     TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
-
     HANDLE hProcess = OpenProcess(
         PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
         FALSE,
@@ -22,7 +21,6 @@ static inline VOID printProcess(DWORD processID, BOOL* isValid) {
             GetModuleBaseName(hProcess, hMods[0], szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
         }
     }
-
     if (_tcscmp(szProcessName, TEXT("<unknown>")) != 0) {
         _tprintf(TEXT(" - (Process %s [PID: %lu]) - \n"), szProcessName, processID);
         CloseHandle(hProcess);

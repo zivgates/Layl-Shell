@@ -3,7 +3,9 @@
 #include "headers/fallback.h"
 #include "headers/tools.h"
 #include "headers/startProcess.h"
-
+#include <handleapi.h>
+#include <processthreadsapi.h>
+#include <signal.h>
 
 
 WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
@@ -11,7 +13,7 @@ WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start",
                  L"process", L"power", L"reg", L"ver", L"about", L"driveinfo",
                  L"-", L"run", L"exit", L"cls", L"bcolor", L"color",
-                 L"cmd", L"changetitlebar", L"tree"};
+                 L"cmd", L"changetitlebar", L"memleak", L"lywrite"};
 
 
 
@@ -20,21 +22,17 @@ static inline LONG WINAPI failureHandler(struct _EXCEPTION_POINTERS* exceptionIn
     return 0;
 }
 
-static inline VOID ctrlhandler(DWORD dwControlType){
-    switch(dwControlType){
-        case CTRL_C_EVENT:
-            //wprintf(L"Exiting...\n");
-            //Sleep(2000);
-            ExitProcess(2);
-            break;
-        default:
-            break;
-    }
+void ctrlc(int signal){
+    ExitThread(0);
 }
 
+void returnToPrompt(){
+
+    ExitThread(0);
+}
 static DWORD WINAPI cmdRunning(LPVOID param){
     SetUnhandledExceptionFilter(failureHandler);
-    SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrlhandler, TRUE);    
+    signal(SIGINT, ctrlc);   
     data* dta = (data*)param;
     debugPrint(dta, L"Started A New Thread\n");
     cmdExecuter(dta);
@@ -42,17 +40,6 @@ static DWORD WINAPI cmdRunning(LPVOID param){
     ExitThread(0);
     return 0;
 }
-
-// static DWORD WINAPI processRunning(LPVOID param){
-//     //SetUnhandledExceptionFilter(failureHandler);
-//     //SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrlhandler, TRUE);    
-//     data* dta = (data*)param;
-//     //debugPrint(dta, L"Started A New Thread\n");
-//     //debugPrint(dta, L"Exiting  Thread\n");
-//     ExitThread(0);
-
-//     return 0;
-// }
 
 
 VOID cmdChecker(data* data){
@@ -74,6 +61,7 @@ RETURN:
             data->currentCmd = i;
             HANDLE hThread = CreateThread(NULL, 0, cmdRunning, (LPVOID)data, 0, NULL);
             WaitForSingleObject(hThread, INFINITE);
+            CloseHandle(hThread);
             return;
         }
     }

@@ -6,7 +6,7 @@
 
 BOOL startCli(cliInfo *info){
     data data;
-    data.path = NULL;
+    data.state = 0;
     WCHAR* context;
     while(1){
 PASS:

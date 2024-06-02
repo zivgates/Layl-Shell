@@ -6,7 +6,7 @@
 
 BOOL startReader(fileInfo* info){
     data data;
-    data.path = NULL;
+    data.state = 0;
     WCHAR* context;
     FILE* file = _wfopen(info->fileName, L"r");
     info->fileContentBuffer = (WCHAR*)malloc(BUFSIZE + 1);

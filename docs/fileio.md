@@ -12,3 +12,5 @@
     - writes content into file
 - fprint [file] [content]
     - writes content into file without erasing the content inside
+- lywrite [file]
+    - starts lywrite with the file you want, lywrite is a simple text editor which you can exit via $exit

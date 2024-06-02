@@ -9,5 +9,5 @@ VOID crash();
 VOID help();
 VOID pause();
 VOID clrscr();
-
+VOID memleak(int size);
 #endif

@@ -14,3 +14,16 @@
     - Clears the screen
 - changetitlebar [name]
     - changes the titlebar to the name you choosed
+
+
+
+
+# UNSAFE COMMANDS
+
+These commands can do damages to your computer, run these with caution
+
+you can allow the execution of these via "lylapi unsafe" command
+
+- memleak [amount]
+    - leaks memory with that much amount
+

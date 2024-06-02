@@ -1,4 +1,5 @@
 #include "headers/startProcess.h"
+#include <handleapi.h>
 #include <processthreadsapi.h>
 #include <synchapi.h>
 #include <winbase.h>
@@ -73,6 +74,7 @@ VOID quickStartProcess(data* data){
     pCr.processArgs = data->arg;
     HANDLE hThread = CreateThread(NULL, 0, createProcessThread, (LPVOID)&pCr, 0, NULL);
     WaitForSingleObject(hThread, INFINITE);
+    CloseHandle(hThread);
 }
 
 
