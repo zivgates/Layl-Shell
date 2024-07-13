@@ -13,7 +13,7 @@ WCHAR* cmds[] = {L"echo", L"crash", L"lylapi", L"fcreate", L"fdelete", L"fcopy",
                  L"pause", L"dcreate", L"ddelete", L"pd", L"cd", L"start",
                  L"process", L"power", L"reg", L"ver", L"about", L"driveinfo",
                  L"-", L"run", L"exit", L"cls", L"bcolor", L"color",
-                 L"cmd", L"changetitlebar", L"memleak", L"lywrite"};
+                 L"system", L"changetitlebar", L"memleak", L"lywrite"};
 
 
 
@@ -65,5 +65,8 @@ RETURN:
             return;
         }
     }
-    wprintf(L"%s isn't a valid command\n", data->cmd);
+    INT result = createProcess(data->cmd, data->arg);
+    if(result == 1){
+        wprintf(L"%s isn't a valid command\n", data->cmd);
+    }
 }

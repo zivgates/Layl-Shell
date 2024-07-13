@@ -8,15 +8,15 @@ BEGIN
     BEGIN
         BLOCK "040904E4"
         BEGIN
-            VALUE "CompanyName",      "zvqle"
+            VALUE "CompanyName",      "ZivGates"
             VALUE "FileDescription",  "Layl Shell"
             VALUE "FileVersion",      "0, 0, 0, 0"
             VALUE "InternalName",     "LaylSh"
-            VALUE "LegalCopyright",   "Copyright 2024 zvqle. All rights reserved."
+            VALUE "LegalCopyright",   "Copyright 2024 ZivGates Community. All rights reserved."
             VALUE "OriginalFilename", "layl.exe"
             VALUE "ProductName",      "Layl-Shell"
-            VALUE "ProductVersion",   "0, 0, 0, 3"
-            VALUE "LegalTrademarks",  "zvqle"
+            VALUE "ProductVersion",   "0, 0, 0, 4"
+            VALUE "LegalTrademarks",  "ZivGates"
             VALUE "Comments",         "Shell"
         END
     END

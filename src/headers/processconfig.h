@@ -3,6 +3,8 @@
 
 #include "main.h"
 
+extern NTSTATUS NTAPI NtSuspendProcess(HANDLE);
+extern NTSTATUS NTAPI NtResumeProcess(HANDLE);
 
 VOID processConfigurer(data* data);
 

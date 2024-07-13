@@ -21,7 +21,7 @@ BOOL createFile(data* data){
                               FILE_ATTRIBUTE_NORMAL,
                               NULL);
     if(hFile == INVALID_HANDLE_VALUE){
-        wprintf(L"Failed Creating File, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         CloseHandle(hFile);
         return FALSE;
     }
@@ -38,7 +38,7 @@ BOOL deleteFile(data* data){
     BOOL result = DeleteFileW(data->arg);
     debugPrint(data, L"File is %s\n", data->arg);
     if(result == FALSE){
-        wprintf(L"Failed Deleting File, Error Code %d\n", GetLastError());\
+        GetErrorMessage(GetLastError());
         return FALSE;
     }
     return TRUE;
@@ -62,7 +62,7 @@ BOOL copyFile(data* data){
 
     BOOL result = CopyFileW(firstFile, secondFile, FALSE);
     if(result == FALSE){
-        wprintf(L"Failed Copying File, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         return FALSE;
     }
     return TRUE;
@@ -109,7 +109,7 @@ BOOL readFile(data* data){
                               FILE_ATTRIBUTE_NORMAL,
                               NULL);
     if(hFile == INVALID_HANDLE_VALUE){
-        wprintf(L"Failed Creating File, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         CloseHandle(hFile);
         return FALSE;
     }
@@ -120,7 +120,7 @@ BOOL readFile(data* data){
                           NULL);
     if(result == FALSE){
         CloseHandle(hFile);
-        wprintf(L"Failed Reading File, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         return FALSE;
     }
     wprintf(L"%hs\n", buffer);
@@ -143,7 +143,7 @@ VOID lywrite(data* data){
     WCHAR* context;
     int i = 0;
     WCHAR intro[512];
-    swprintf(intro, 512, L"Layl LyWrite Build %.3f\nCopyright zvqle, all rights reserved\n\ntype '$exit' to exit the editor", VER);
+    swprintf(intro, 512, L"Layl LyWrite Build %.3f\nCopyright ZivGates Community, all rights reserved\n\ntype '$exit' to exit the editor", VER);
     wprintf(L"%s\n\n", intro);
     while(TRUE){
         PASS:

@@ -39,7 +39,7 @@ VOID moveDirectory(data* data){
     
     BOOL result = SetCurrentDirectoryW(data->arg);
     if(!result){
-        wprintf(L"Error Changing Directory, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         return;
     }
     WCHAR buffer[2056];
@@ -54,7 +54,7 @@ VOID createDirectory(data* data){
     }
     BOOL result = CreateDirectoryW(data->arg, NULL);
     if(!result){
-        wprintf(L"Failed Creating Direcotry, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
     }
     return;
 }
@@ -66,7 +66,7 @@ VOID deleteDirectory(data* data){
     }
     BOOL result = RemoveDirectoryW(data->arg);
     if(!result){
-        wprintf(L"Failed Removing Direcotry, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
     }
     return;
 }

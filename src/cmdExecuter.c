@@ -92,7 +92,7 @@ VOID cmdExecuter(data* data){
             break;
         case 22:
             WCHAR buffer[BUFSIZE];
-            swprintf(buffer, BUFSIZE, L"Layl Shell\nBuild %0.3f\nCopyright \"zvqle\", All Rights Reserved", VER);
+            swprintf(buffer, BUFSIZE, L"Layl Shell\nBuild %0.3f\nCopyright \"Zivgates Community\", All Rights Reserved", VER);
             MessageBoxW(NULL, buffer, L"About Layl-Shell", MB_OK);
             break;
         case 23:
@@ -121,7 +121,7 @@ VOID cmdExecuter(data* data){
             break;
         case 30:
             if(!data->arg){
-                wprintf(L"cmd [cmd] - runs that cmd in the shell");
+                wprintf(L"system [cmd] - runs that cmd in the shell");
                 break;
             }
             char* cmd = wcharToChar(data->arg);

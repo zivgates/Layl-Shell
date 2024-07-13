@@ -70,3 +70,18 @@ BOOL checkIfFileExist(WCHAR* fileName){
     }
 
 }
+
+VOID GetErrorMessage(INT error){
+    
+    LPWSTR string;
+
+    size_t size = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 
+    NULL, 
+    error, 
+    MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), 
+    (LPWSTR)&string, 
+    0, NULL);
+
+    wprintf(L"%s", string);
+    LocalFree(string);
+}

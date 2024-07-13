@@ -1,4 +1,8 @@
 #include "headers/power.h"
+#include "headers/tools.h"
+#include <errhandlingapi.h>
+#include <handleapi.h>
+#include <libloaderapi.h>
 #include <winternl.h>
 #include <powrprof.h>
 
@@ -11,14 +15,14 @@ static inline BOOL giveShutDownPerms(){
     HANDLE hToken;
     TOKEN_PRIVILEGES tkp;
     if(!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken)){
-        wprintf(L"Cannot Open Process Token, Error Code %lu\n", GetLastError());
+        GetErrorMessage(GetLastError());
         return FALSE;
     }
     LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, (PLUID)&tkp.Privileges);
     tkp.PrivilegeCount = 1;
     tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
     if(!AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES)NULL, 0)){
-        wprintf(L"Cannot Change Token Privlages, Error Code %lu\n", GetLastError());
+        GetErrorMessage(GetLastError());
         CloseHandle(hToken);
         return FALSE;
     }
@@ -76,6 +80,7 @@ static VOID forceShutdown(WCHAR* type, WCHAR* isValid){
             wprintf(L"Incorrect Argument, Use -s to shutdown or -r to restart\n");
             break;
     }
+    FreeLibrary(ntdll);
     
 }
 

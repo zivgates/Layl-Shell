@@ -11,5 +11,6 @@ VOID debugPrint(data* data, const WCHAR* format, ...);
 char* wcharToChar(const wchar_t* str);
 BOOL checkAdmin();
 BOOL checkIfFileExist(WCHAR* fileName);
+VOID GetErrorMessage(INT error);
 
 #endif

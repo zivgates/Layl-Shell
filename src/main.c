@@ -20,10 +20,13 @@ int wmain(int argc, WCHAR* argv[]){
         }
         else{
             swprintf(begin, BUFSIZE, 
-                       L"-------------------------------------------\n"
-                               "| Layl Shell Version %.1f                  |\n"
-                               "| Copyright \"zvqle\", All Rights Reserved  |\n"
-                               "-------------------------------------------\n\n", VER);
+                                "\n\n"
+                       L"  --------------------------------------------------------\n"
+                               "  | Layl Shell Version %.1f                               |\n"
+                               "  | Copyright \"ZivGates Community\", All Rights Reserved  |\n"
+                               "  --------------------------------------------------------\n"
+                               "     |                                         |\n\n", VER);
+                               
             wprintf(L"%s\n", begin);
         }
         cliInfo info;

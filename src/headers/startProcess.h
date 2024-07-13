@@ -4,7 +4,7 @@
 
 #include "main.h"
 
-VOID createProcess(WCHAR* process, WCHAR* arguments);
+INT createProcess(WCHAR* process, WCHAR* arguments);
 VOID startProcess(data* data);
 VOID quickStartProcess(data* data);
 VOID quickStartProcessinNewWindow(data* data);

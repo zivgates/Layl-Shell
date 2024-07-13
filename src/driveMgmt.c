@@ -1,4 +1,5 @@
 #include "headers/driveMgmt.h"
+#include "headers/tools.h"
 
 
 
@@ -14,7 +15,7 @@ VOID getDriveInfo(data* data){
     ULARGE_INTEGER freeSpaceOfDrive;
     BOOL result = SHGetDiskFreeSpaceExW(data->arg, &spaceGivenForProgram, &totalSizeOfVolume, &freeSpaceOfDrive);
     if(!result){
-        wprintf(L"Failed Getting Drive Size, Error Code %d\n", GetLastError());
+        GetErrorMessage(GetLastError());
         return;
     }
     WCHAR buffer[BUFSIZE]; 

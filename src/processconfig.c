@@ -2,52 +2,50 @@
 #include <tchar.h>
 #include <psapi.h>
 #include <winnt.h>
+#include "headers/tools.h"
+#include <winternl.h>
 
 
 
-
-static inline VOID printProcess(DWORD processID, BOOL* isValid) {
-    TCHAR szProcessName[MAX_PATH] = TEXT("<unknown>");
-    HANDLE hProcess = OpenProcess(
-        PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
-        FALSE,
-        processID
-    );
-    if (NULL != hProcess) {
-        HMODULE hMods[BUFSIZE];
-        DWORD cbNeeded;
-
-        if (EnumProcessModules(hProcess, hMods, sizeof(hMods), &cbNeeded)) {
-            GetModuleBaseName(hProcess, hMods[0], szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
-        }
-    }
-    if (_tcscmp(szProcessName, TEXT("<unknown>")) != 0) {
-        _tprintf(TEXT(" - (Process %s [PID: %lu]) - \n"), szProcessName, processID);
-        CloseHandle(hProcess);
-        *isValid = TRUE;
+VOID suspend_process(WCHAR* pidstring){
+    wprintf(L"ZivGates Suspender\n" 
+                   "Copyright ZivGates, All Rights Reserved\n\n");
+    if(!pidstring){
+        wprintf(L"usage: process -w [pid]\n");
         return;
     }
-    CloseHandle(hProcess);
-    isValid = FALSE;
-}
-
-static inline VOID listProcesses(){
-    DWORD aProcesses[BUFSIZE], cbNeeded, cProcesses;
-    if(!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded)){
-        wprintf(L"Error Printing Processes\n");
+    INT pid = _wtoi(pidstring);
+    if(!pid){
+        wprintf(L"pid must be an integer\n");
         return;
     }
-    cProcesses = cbNeeded / sizeof(DWORD);
 
-    BOOL isValid = FALSE;
-
-    for(unsigned int i = 0; i < cProcesses; i++){
-        if(aProcesses[i] != 0){
-            printProcess(aProcesses[i], &isValid);
-            if(isValid && i % 5 == 0) wprintf(L"\n");
+    HANDLE process = OpenProcess(PROCESS_ALL_ACCESS , FALSE, pid);
+    if(process == NULL){
+        GetErrorMessage(GetLastError());
+        
+        return;
+    }
+    NTSTATUS status = NtSuspendProcess(process);
+    if(!NT_SUCCESS(status)){
+        wprintf(L"NtSuspendProcess failed with NTSTATUS 0x%lx", status);
+        CloseHandle(process);
+        return;
+    }
+    wprintf(L"[!] Press W to unsuspend the process with PID %d\n", pid);
+    while(1){
+        Sleep(10);
+        if(GetAsyncKeyState('W') & 0x8000){
+            NTSTATUS status = NtResumeProcess(process);
+            if(!NT_SUCCESS(status)){
+                wprintf(L"NtResumeProcess failed with NTSTATUS 0x%lx", status);
+                CloseHandle(process);
+                return;
+            }
+            CloseHandle(process);
+            break;
         }
     }
-    return;
 }
 
 static inline VOID getPid(WCHAR* windowName){
@@ -111,14 +109,14 @@ static inline VOID killProcess(DWORD pidnum){
 }
 
 static inline VOID printHelp(){
-    wprintf(L"PROCESS COMMAND:\n");
-    wprintf(L"process [command] (arguments (optional))\n");
-    wprintf(L"commands can be -k (to kill processes), -l (to list processes), or -g (to get a pid of a window)\n\n");
-    wprintf(L"----------------------------------------------------------------------------------------------------------\n");
-    wprintf(L"-- For -k, you have to pass the PID of the process you want to kill into the argument                   --\n");
-    wprintf(L"-- For -g, you have to pass the title-name of the window you want to get the pid from into the argument --\n");
-    wprintf(L"-- For -l, no arguments are needed                                                                      --\n");
-    wprintf(L"----------------------------------------------------------------------------------------------------------\n");
+    wprintf(L"PROCESS COMMAND:\n"
+    L"process [command] (arguments (optional))\n"
+    L"commands can be -k (to kill processes), -l (to list processes), or -g (to get a pid of a window)\n\n"
+    L"----------------------------------------------------------------------------------------------------------\n"
+    L"-- For -k, you have to pass the PID of the process you want to kill into the argument                   --\n"
+    L"-- For -g, you have to pass the title-name of the window you want to get the pid from into the argument --\n"
+    L"-- For -s, you need to pass the PID of the process you want to suspend                                  --\n"
+    L"----------------------------------------------------------------------------------------------------------\n");
 }
 
 VOID processConfigurer(data* data){
@@ -130,38 +128,37 @@ VOID processConfigurer(data* data){
     WCHAR* type = wcstok(data->arg, L" ", &token);
     WCHAR* arg = wcstok(NULL, L"\n", &token);
     if(!type){
-        printf("type 'process -?' to get how to use the command\n"); 
+        wprintf(L"type 'process -?' to get how to use the command\n"); 
         return;
     }
     if(!type[1]){
-        printf("type 'process -?' to get how to use the command\n"); 
+        wprintf(L"type 'process -?' to get how to use the command\n"); 
         return;
     }
     switch(type[1]){
         case L'k':
             if(!arg){
-                printf("No PID passed\n");
+                wprintf(L"No PID passed\n");
                 return;
             }
             DWORD pid = wcstol(arg, &token, 10);
             killProcess(pid);
             break;
-        case L'l':
-            listProcesses();
-            break;
         case L'g':
             if(!arg){
-                printf("No Window Name passed\n");
+                wprintf(L"No Window Name passed\n");
                 return;
             }
             getPid(arg);
+            break;
+        case L's':
+            suspend_process(arg);
             break;
         case L'?':
             printHelp();
             break;
         default:
-            printf("%c isn't a valid argument\ntype 'process -?' to get how to use the command\n", type[1]);
+            wprintf(L"%c isn't a valid argument\ntype 'process -?' to get how to use the command\n", type[1]);
             break;
     }
-
 }

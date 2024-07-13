@@ -69,7 +69,7 @@ static inline BOOL createReg(WCHAR* hkey, WCHAR* regpath){
     }
     else{
         RegCloseKey(closing);
-        wprintf(L"Can't Create Key, Error Code %lu\n", (DWORD)result);
+        GetErrorMessage(result);
         return TRUE;
     }
 
@@ -108,7 +108,7 @@ static inline BOOL deleteReg(WCHAR* hkey, WCHAR* regpath){
     );
 
     if (checkResult != ERROR_SUCCESS) {
-        wprintf(L"Cannot Open Key: %s\\%s, Error Code %ld\n", hkey, regpath, checkResult);
+        GetErrorMessage(checkResult);
         RegCloseKey(closing);
         return FALSE;
     }
@@ -117,7 +117,7 @@ static inline BOOL deleteReg(WCHAR* hkey, WCHAR* regpath){
         regpath
     );
     if (result != ERROR_SUCCESS) {
-        wprintf(L"Cannot Delete Key: %s\\%s, Error Code %ld\n", hkey, regpath, result);
+        GetErrorMessage(result);
         RegCloseKey(closing);
         return FALSE;
     }
@@ -169,7 +169,7 @@ static inline BOOL writeReg(WCHAR* hkey, WCHAR* regpath) {
     );
 
     if (checkResult != ERROR_SUCCESS) {
-        wprintf(L"Cannot Open Key: %s\\%s, Error Code %ld\n", hkey, keypath, checkResult);
+        GetErrorMessage(checkResult);
         RegCloseKey(closing);
         return FALSE;
     }
@@ -194,7 +194,7 @@ static inline BOOL writeReg(WCHAR* hkey, WCHAR* regpath) {
 
 
     if (result != ERROR_SUCCESS) {
-        wprintf(L"Cannot Set Key: %s\\%s, Error Code %ld\n", hkey, keypath, result);
+        GetErrorMessage(result);
         RegCloseKey(closing);
         return FALSE;
     }

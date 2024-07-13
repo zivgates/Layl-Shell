@@ -5,7 +5,7 @@
 # Layl Shell
 Welcome To The Layl Shell, A Shell And Script Interperter For Microsoft Windows
 
-Copyright zvqle, All Rights Reserved
+Copyright ZivGates Community, All Rights Reserved
 # How To Get The Executable
 To Get The Beta Version, Compile the source in the main repository
 

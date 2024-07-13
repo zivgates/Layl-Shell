@@ -1,4 +1,7 @@
 #include "headers/startProcess.h"
+#include "headers/tools.h"
+//#include "headers/tools.h"
+#include <errhandlingapi.h>
 #include <handleapi.h>
 #include <processthreadsapi.h>
 #include <synchapi.h>
@@ -6,7 +9,7 @@
 
 
 
-VOID createProcess(WCHAR* process, WCHAR* arguments){
+INT createProcess(WCHAR* process, WCHAR* arguments){
     WCHAR buffer[BUFSIZE];
     STARTUPINFOW sif;
     PROCESS_INFORMATION lpi;
@@ -20,11 +23,14 @@ VOID createProcess(WCHAR* process, WCHAR* arguments){
         swprintf(buffer, BUFSIZE, L"%s %s", process, arguments);
     }
     BOOL result = CreateProcessW(NULL, buffer, NULL, NULL, FALSE, 0, NULL, NULL, &sif, &lpi);
-    if(!result){
-        wprintf(L"Failed Creating Process %s, Error Code %d\n", process, GetLastError());
-        return;
+    if(GetLastError() == 2 && !result) return 1;
+    else if(!result){
+        GetErrorMessage(GetLastError());
+        return 2;
     }
+    
     WaitForSingleObject(lpi.hProcess, INFINITE);
+    return 0;
 }
 
 
